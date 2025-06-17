@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="server_carEntities-Web.config Connection String" description="server_carEntities Cadena de conexión que usa la aplicación en web.config para obtener acceso a la base de datos." defaultValue="metadata=res://*/Models.CarModel.csdl|res://*/Models.CarModel.ssdl|res://*/Models.CarModel.msl;&#xD;&#xA;    provider=System.Data.SqlClient;provider connection string=&quot;Server=tcp:server-car.database.windows.net,1433;&#xD;&#xA;    Initial Catalog=data_cars;Persist Security Info=False;User ID=admintest;Password=Admin123;MultipleActiveResultSets=False;&#xD;&#xA;    Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Carlos\\source\\repos\\pr_web_car2\\pr_web_car\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='server_carEntities']/@connectionString" />
+  </parameter>
+</parameters>

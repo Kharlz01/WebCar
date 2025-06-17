@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="data_carsModelStoreContainer" CdmEntityContainer="server_carEntities">
+    <EntitySetMapping Name="Brands">
+      <EntityTypeMapping TypeName="data_carsModel.Brands">
+        <MappingFragment StoreEntitySet="Brands">
+          <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+          <ScalarProperty Name="NameBrand" ColumnName="NameBrand" />
+          <ScalarProperty Name="OriginCountry" ColumnName="OriginCountry" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cars">
+      <EntityTypeMapping TypeName="data_carsModel.Cars">
+        <MappingFragment StoreEntitySet="Cars">
+          <ScalarProperty Name="CarID" ColumnName="CarID" />
+          <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Km" ColumnName="Km" />
+          <ScalarProperty Name="FuelType" ColumnName="FuelType" />
+          <ScalarProperty Name="Transmission" ColumnName="Transmission" />
+          <ScalarProperty Name="StatusCar" ColumnName="StatusCar" />
+          <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sellers">
+      <EntityTypeMapping TypeName="data_carsModel.Sellers">
+        <MappingFragment StoreEntitySet="Sellers">
+          <ScalarProperty Name="SellerID" ColumnName="SellerID" />
+          <ScalarProperty Name="CC" ColumnName="CC" />
+          <ScalarProperty Name="NameSeller" ColumnName="NameSeller" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="BaseWage" ColumnName="BaseWage" />
+          <ScalarProperty Name="ComissionRate" ColumnName="ComissionRate" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sells">
+      <EntityTypeMapping TypeName="data_carsModel.Sells">
+        <MappingFragment StoreEntitySet="Sells">
+          <ScalarProperty Name="SellID" ColumnName="SellID" />
+          <ScalarProperty Name="CarID" ColumnName="CarID" />
+          <ScalarProperty Name="SellerID" ColumnName="SellerID" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="CustomerCC" ColumnName="CustomerCC" />
+          <ScalarProperty Name="SellDate" ColumnName="SellDate" />
+          <ScalarProperty Name="SellPrice" ColumnName="SellPrice" />
+          <ScalarProperty Name="TypePay" ColumnName="TypePay" />
+          <ScalarProperty Name="Comission" ColumnName="Comission" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetalleVentas">
+      <EntityTypeMapping TypeName="data_carsModel.DetalleVentas">
+        <MappingFragment StoreEntitySet="DetalleVentas">
+          <ScalarProperty Name="Comission" ColumnName="Comission" />
+          <ScalarProperty Name="TypePay" ColumnName="TypePay" />
+          <ScalarProperty Name="SellDate" ColumnName="SellDate" />
+          <ScalarProperty Name="CustomerCC" ColumnName="CustomerCC" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="CedulaVendedor" ColumnName="CedulaVendedor" />
+          <ScalarProperty Name="Vendedor" ColumnName="Vendedor" />
+          <ScalarProperty Name="SellPrice" ColumnName="SellPrice" />
+          <ScalarProperty Name="PrecioOriginal" ColumnName="PrecioOriginal" />
+          <ScalarProperty Name="Marca" ColumnName="Marca" />
+          <ScalarProperty Name="Vehiculo" ColumnName="Vehiculo" />
+          <ScalarProperty Name="SellID" ColumnName="SellID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_VehiculosVendidosPorVendedor" FunctionName="data_carsModel.Store.sp_VehiculosVendidosPorVendedor">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="data_carsModel.sp_VehiculosVendidosPorVendedor_Result">
+          <ScalarProperty Name="CarID" ColumnName="CarID" />
+          <ScalarProperty Name="Marca" ColumnName="Marca" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="SellPrice" ColumnName="SellPrice" />
+          <ScalarProperty Name="SellDate" ColumnName="SellDate" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="CustomerCC" ColumnName="CustomerCC" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

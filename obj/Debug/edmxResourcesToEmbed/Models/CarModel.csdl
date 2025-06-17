@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="data_carsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Brands">
+    <Key>
+      <PropertyRef Name="BrandID" />
+    </Key>
+    <Property Name="BrandID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NameBrand" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OriginCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StartDate" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+    <NavigationProperty Name="Cars" Relationship="Self.FK_Car_Brand" FromRole="Brands" ToRole="Cars" />
+  </EntityType>
+  <EntityType Name="Cars">
+    <Key>
+      <PropertyRef Name="CarID" />
+    </Key>
+    <Property Name="CarID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BrandID" Type="Int32" Nullable="false" />
+    <Property Name="Model" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Year" Type="Int32" Nullable="false" />
+    <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Km" Type="Int32" />
+    <Property Name="FuelType" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Transmission" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="StatusCar" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Brands" Relationship="Self.FK_Car_Brand" FromRole="Cars" ToRole="Brands" />
+    <NavigationProperty Name="Sells" Relationship="Self.FK_Sell_Car" FromRole="Cars" ToRole="Sells" />
+  </EntityType>
+  <EntityType Name="Sellers">
+    <Key>
+      <PropertyRef Name="SellerID" />
+    </Key>
+    <Property Name="SellerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NameSeller" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="BaseWage" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="ComissionRate" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="Active" Type="Boolean" />
+    <NavigationProperty Name="Sells" Relationship="Self.FK_Sell_Seller" FromRole="Sellers" ToRole="Sells" />
+  </EntityType>
+  <EntityType Name="Sells">
+    <Key>
+      <PropertyRef Name="SellID" />
+    </Key>
+    <Property Name="SellID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CarID" Type="Int32" Nullable="false" />
+    <Property Name="SellerID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CustomerCC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="SellDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="SellPrice" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="TypePay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Comission" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <NavigationProperty Name="Cars" Relationship="Self.FK_Sell_Car" FromRole="Sells" ToRole="Cars" />
+    <NavigationProperty Name="Sellers" Relationship="Self.FK_Sell_Seller" FromRole="Sells" ToRole="Sellers" />
+  </EntityType>
+  <Association Name="FK_Car_Brand">
+    <End Role="Brands" Type="Self.Brands" Multiplicity="1" />
+    <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Brands">
+        <PropertyRef Name="BrandID" />
+      </Principal>
+      <Dependent Role="Cars">
+        <PropertyRef Name="BrandID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sell_Car">
+    <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
+    <End Role="Sells" Type="Self.Sells" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cars">
+        <PropertyRef Name="CarID" />
+      </Principal>
+      <Dependent Role="Sells">
+        <PropertyRef Name="CarID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sell_Seller">
+    <End Role="Sellers" Type="Self.Sellers" Multiplicity="1" />
+    <End Role="Sells" Type="Self.Sells" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sellers">
+        <PropertyRef Name="SellerID" />
+      </Principal>
+      <Dependent Role="Sells">
+        <PropertyRef Name="SellerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="server_carEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Brands" EntityType="Self.Brands" />
+    <EntitySet Name="Cars" EntityType="Self.Cars" />
+    <EntitySet Name="Sellers" EntityType="Self.Sellers" />
+    <EntitySet Name="Sells" EntityType="Self.Sells" />
+    <AssociationSet Name="FK_Car_Brand" Association="Self.FK_Car_Brand">
+      <End Role="Brands" EntitySet="Brands" />
+      <End Role="Cars" EntitySet="Cars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sell_Car" Association="Self.FK_Sell_Car">
+      <End Role="Cars" EntitySet="Cars" />
+      <End Role="Sells" EntitySet="Sells" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sell_Seller" Association="Self.FK_Sell_Seller">
+      <End Role="Sellers" EntitySet="Sellers" />
+      <End Role="Sells" EntitySet="Sells" />
+    </AssociationSet>
+    <EntitySet Name="DetalleVentas" EntityType="data_carsModel.DetalleVentas" />
+    <FunctionImport Name="sp_VehiculosVendidosPorVendedor" ReturnType="Collection(data_carsModel.sp_VehiculosVendidosPorVendedor_Result)">
+      <Parameter Name="CedulaVendedor" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="DetalleVentas">
+    <Key>
+      <PropertyRef Name="SellID" />
+      <PropertyRef Name="Marca" />
+      <PropertyRef Name="PrecioOriginal" />
+      <PropertyRef Name="SellPrice" />
+      <PropertyRef Name="Vendedor" />
+      <PropertyRef Name="CedulaVendedor" />
+      <PropertyRef Name="CustomerName" />
+      <PropertyRef Name="SellDate" />
+      <PropertyRef Name="Comission" />
+    </Key>
+    <Property Name="SellID" Type="Int32" Nullable="false" />
+    <Property Name="Vehiculo" Type="String" MaxLength="105" FixedLength="false" Unicode="true" />
+    <Property Name="Marca" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PrecioOriginal" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+    <Property Name="SellPrice" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+    <Property Name="Vendedor" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="true" />
+    <Property Name="CedulaVendedor" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerCC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="SellDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TypePay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Comission" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+  </EntityType>
+  <ComplexType Name="sp_VehiculosVendidosPorVendedor_Result">
+    <Property Type="Int32" Name="CarID" Nullable="false" />
+    <Property Type="String" Name="Marca" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Model" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="Year" Nullable="false" />
+    <Property Type="String" Name="Color" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="SellPrice" Nullable="false" Precision="12" Scale="2" />
+    <Property Type="DateTime" Name="SellDate" Nullable="false" />
+    <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="CustomerCC" Nullable="true" MaxLength="20" />
+  </ComplexType>
+</Schema>

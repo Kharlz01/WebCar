@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="data_carsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Brands">
+    <Key>
+      <PropertyRef Name="BrandID" />
+    </Key>
+    <Property Name="BrandID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NameBrand" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="OriginCountry" Type="nvarchar" MaxLength="50" />
+    <Property Name="StartDate" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Cars">
+    <Key>
+      <PropertyRef Name="CarID" />
+    </Key>
+    <Property Name="CarID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BrandID" Type="int" Nullable="false" />
+    <Property Name="Model" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Color" Type="nvarchar" MaxLength="50" />
+    <Property Name="Price" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Km" Type="int" />
+    <Property Name="FuelType" Type="nvarchar" MaxLength="30" />
+    <Property Name="Transmission" Type="nvarchar" MaxLength="30" />
+    <Property Name="StatusCar" Type="nvarchar" MaxLength="20" />
+    <Property Name="RegisterDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Sellers">
+    <Key>
+      <PropertyRef Name="SellerID" />
+    </Key>
+    <Property Name="SellerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CC" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="NameSeller" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="StartDate" Type="date" Nullable="false" />
+    <Property Name="BaseWage" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="ComissionRate" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Sells">
+    <Key>
+      <PropertyRef Name="SellID" />
+    </Key>
+    <Property Name="SellID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CarID" Type="int" Nullable="false" />
+    <Property Name="SellerID" Type="int" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="CustomerCC" Type="nvarchar" MaxLength="20" />
+    <Property Name="SellDate" Type="date" Nullable="false" />
+    <Property Name="SellPrice" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="TypePay" Type="nvarchar" MaxLength="50" />
+    <Property Name="Comission" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'data_cars.dbo.DetalleVentas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="DetalleVentas">
+    <Key>
+      <PropertyRef Name="SellID" />
+      <PropertyRef Name="Marca" />
+      <PropertyRef Name="PrecioOriginal" />
+      <PropertyRef Name="SellPrice" />
+      <PropertyRef Name="Vendedor" />
+      <PropertyRef Name="CedulaVendedor" />
+      <PropertyRef Name="CustomerName" />
+      <PropertyRef Name="SellDate" />
+      <PropertyRef Name="Comission" />
+    </Key>
+    <Property Name="SellID" Type="int" Nullable="false" />
+    <Property Name="Vehiculo" Type="nvarchar" MaxLength="105" />
+    <Property Name="Marca" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PrecioOriginal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="SellPrice" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="Vendedor" Type="nvarchar" MaxLength="201" Nullable="false" />
+    <Property Name="CedulaVendedor" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="CustomerCC" Type="nvarchar" MaxLength="20" />
+    <Property Name="SellDate" Type="date" Nullable="false" />
+    <Property Name="TypePay" Type="nvarchar" MaxLength="50" />
+    <Property Name="Comission" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Car_Brand">
+    <End Role="Brands" Type="Self.Brands" Multiplicity="1" />
+    <End Role="Cars" Type="Self.Cars" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Brands">
+        <PropertyRef Name="BrandID" />
+      </Principal>
+      <Dependent Role="Cars">
+        <PropertyRef Name="BrandID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sell_Car">
+    <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
+    <End Role="Sells" Type="Self.Sells" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cars">
+        <PropertyRef Name="CarID" />
+      </Principal>
+      <Dependent Role="Sells">
+        <PropertyRef Name="CarID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sell_Seller">
+    <End Role="Sellers" Type="Self.Sellers" Multiplicity="1" />
+    <End Role="Sells" Type="Self.Sells" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sellers">
+        <PropertyRef Name="SellerID" />
+      </Principal>
+      <Dependent Role="Sells">
+        <PropertyRef Name="SellerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="sp_VehiculosVendidosPorVendedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CedulaVendedor" Type="nvarchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="data_carsModelStoreContainer">
+    <EntitySet Name="Brands" EntityType="Self.Brands" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cars" EntityType="Self.Cars" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sellers" EntityType="Self.Sellers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sells" EntityType="Self.Sells" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DetalleVentas" EntityType="Self.DetalleVentas" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [DetalleVentas].[SellID] AS [SellID], 
+    [DetalleVentas].[Vehiculo] AS [Vehiculo], 
+    [DetalleVentas].[Marca] AS [Marca], 
+    [DetalleVentas].[PrecioOriginal] AS [PrecioOriginal], 
+    [DetalleVentas].[SellPrice] AS [SellPrice], 
+    [DetalleVentas].[Vendedor] AS [Vendedor], 
+    [DetalleVentas].[CedulaVendedor] AS [CedulaVendedor], 
+    [DetalleVentas].[CustomerName] AS [CustomerName], 
+    [DetalleVentas].[CustomerCC] AS [CustomerCC], 
+    [DetalleVentas].[SellDate] AS [SellDate], 
+    [DetalleVentas].[TypePay] AS [TypePay], 
+    [DetalleVentas].[Comission] AS [Comission]
+    FROM [dbo].[DetalleVentas] AS [DetalleVentas]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Car_Brand" Association="Self.FK_Car_Brand">
+      <End Role="Brands" EntitySet="Brands" />
+      <End Role="Cars" EntitySet="Cars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sell_Car" Association="Self.FK_Sell_Car">
+      <End Role="Cars" EntitySet="Cars" />
+      <End Role="Sells" EntitySet="Sells" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sell_Seller" Association="Self.FK_Sell_Seller">
+      <End Role="Sellers" EntitySet="Sellers" />
+      <End Role="Sells" EntitySet="Sells" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
