@@ -70,7 +70,7 @@ namespace pr_web_car
                     seller.LastName = txt_lastname.Text.Trim();
                     seller.StartDate = DateTime.Parse(txt_start.Text);
                     seller.BaseWage = decimal.Parse(txt_wage.Text);
-                    seller.ComissionRate = int.Parse(txt_plus.Text);
+                    seller.ComissionRate = decimal.Parse(txt_plus.Text);
 
                     context.SaveChanges();
 
